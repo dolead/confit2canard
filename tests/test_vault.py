@@ -11,13 +11,13 @@ ENCRYPTED_PAYLOAD=("$Vault;mp4C9+rlUYCRttbL;7fs4rsL2KrC3MZ1g2a8GFn"
 def test_encrypt_vault():
     vault = Vault(SECRET_KEY)
     encrypted = vault.encrypt(json.dumps(PAYLOAD))
-    assert encrypted.startswith(f"{vault.magic}{vault.separator}")
+    assert encrypted.startswith(vault.prefix())
 
 
 def test_decrypt_vault():
     vault = Vault(SECRET_KEY)
-    cleartext = vault.decrypt(ENCRYPTED_PAYLOAD).decode("utf-8")
-    assert not cleartext.startswith(f"{vault.magic}{vault.separator}")
+    cleartext = vault.decrypt(ENCRYPTED_PAYLOAD)
+    assert not cleartext.startswith(vault.prefix())
     payload = json.loads(cleartext)
     for key, value in PAYLOAD.items():
         assert key in payload

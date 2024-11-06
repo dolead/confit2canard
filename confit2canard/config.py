@@ -1,7 +1,7 @@
 import json
 import logging
 from os import environ, path
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 
 import yaml
 
@@ -14,12 +14,14 @@ logger = logging.getLogger(__name__)
 class Config:
     def __init__(self, files: Optional[List[str]] = None,
                  passkey: Optional[str] = None):
-        self._files = []
-        self._configuration = {}
-        self._passkey = environ.get("VAULT_PASSKEY", passkey)
-        if self._passkey:
-            self._passkey = self._passkey.encode("utf-8")
+        self._files: List[str] = []
+        self._configuration: Dict[str, Any] = {}
+        self._passkey: Optional[bytes] = None
 
+        if passkey:
+            self._passkey = passkey.encode("utf-8")
+        elif environ.get("VAULT_PASSKEY"):
+            self._passkey = environ["VAULT_PASSKEY"].encode("utf-8")
         if files:
             for config_file in files:
                 self.load(config_file)
@@ -68,15 +70,16 @@ class Config:
         self._deep_update(data)
 
     def _strip_encrytion(self, payload: str) -> str:
-        if payload.startswith(f"{Vault.magic}{Vault.separator}"):
+        if payload.startswith(Vault.prefix()):
+            if self._passkey is None:
+                raise RuntimeError("No decryption key provided")
             vault = Vault(self._passkey)
             decrypted = vault.decrypt(payload)
             return decrypted
         else:
             return payload
 
-    def _deep_update(self, source: dict,
-                     target: Optional[dict] = None) -> dict:
+    def _deep_update(self, source: dict, target: Optional[dict] = None):
         if target is None:
             target = self._configuration
         if not source:
