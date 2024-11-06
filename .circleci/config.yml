@@ -1,0 +1,57 @@
+version: 2.1
+jobs:
+  build_n_run:
+    parameters:
+      python_version:
+        type: string
+    docker:
+      - image: circleci/<<parameters.python_version>>
+    environment:
+      JOB_VERSION: <<parameters.python_version>>
+    parallelism: 1
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/
+      - restore_cache:
+          keys:
+            - deps-{{ checksum "poetry.lock" }}-{{ .Environment.CIRCLE_JOB }}
+      - run:
+          name: Poetry installing dependencies
+          command: |
+            poetry install
+      - save_cache:
+          key: deps-{{ checksum "poetry.lock" }}-{{ .Environment.CIRCLE_JOB }}
+          paths:
+            - /home/circleci/.cache/pypoetry/virtualenvs
+      - run:
+          name: Run tests & coverage
+          command: |
+            poetry run pytest \
+              --cov=confit2canard \
+              --cov-report html:tests_coverage/$JOB_VERSION/pycov \
+              --html="tests_coverage/$JOB_VERSION/coverage.html" --self-contained-html \
+              --junit-xml="tests_coverage/$JOB_VERSION/coverage.xml"
+            poetry run coverage report
+            mv .coverage tests_coverage/$JOB_VERSION/
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project/tests_coverage
+      - run:
+          name: Build
+          command: |
+            make build
+workflows:
+  version: 2
+  all-tests:
+    jobs:
+      - build_n_run:
+          matrix:
+            parameters:
+              python_version:
+                - "python:3.9"
+                - "python:3.10"
+                - "python:3.11"
+                - "python:3.12"
+                - "python:3.13"
