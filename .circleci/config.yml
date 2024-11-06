@@ -5,7 +5,7 @@ jobs:
       python_version:
         type: string
     docker:
-      - image: circleci/<<parameters.python_version>>
+      - image: cimg/<<parameters.python_version>>
     environment:
       JOB_VERSION: <<parameters.python_version>>
     parallelism: 1
