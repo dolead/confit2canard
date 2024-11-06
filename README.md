@@ -32,7 +32,7 @@ from confit2canard import Config
 
 passkey = "ThisIsSupposedToBeAKey0000000000"
 configuration_files = ["app.yml",
-                       "production/tokens.yml,
+                       "production/tokens.yml",
                        "production/secrets.yml"]
 configuration = Config(configuration_files, passkey=passkey)
 
@@ -49,6 +49,5 @@ configuration with a AES-GCM key:
 
 ```shell
 VAULT_PASSKEY="ThisIsSupposedToBeAKey0000000000" python \
-  -m confit2canard.confit2canard \
-  production/secrets.yml
+  -m confit2canard production/secrets.yml
 ```

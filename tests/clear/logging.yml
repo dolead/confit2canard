@@ -1,0 +1,4 @@
+logging:
+  path: "/path/to/logs/"
+  level: INFO
+  maxsize: 1024

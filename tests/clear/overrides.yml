@@ -1,0 +1,2 @@
+logging:
+  maxsize: 2048
