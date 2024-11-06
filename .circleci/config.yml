@@ -17,6 +17,10 @@ jobs:
           keys:
             - deps-{{ checksum "poetry.lock" }}-{{ .Environment.CIRCLE_JOB }}
       - run:
+          name: More dependencies
+          command: |
+            pip install --upgrade pip setuptools wheel
+      - run:
           name: Poetry installing dependencies
           command: |
             poetry install
