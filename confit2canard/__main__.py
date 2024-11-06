@@ -15,6 +15,9 @@ logger.addHandler(handler)
 
 
 def main(configuration, passkey: str = ""):
+    if not path.exists(path.abspath(path.dirname(configuration))):
+        logger.error("Parent folder for %s doesn't exist", configuration)
+        return
     editor = environ.get("EDITOR")
     vault = Vault((environ.get("VAULT_PASSKEY") or passkey).encode("utf-8"))
     if not editor:
@@ -23,12 +26,15 @@ def main(configuration, passkey: str = ""):
 
     extension = "." + configuration.split(".")[-1]
     old = ""
-    with tempfile.NamedTemporaryFile(delete=False, suffix=extension) as tfile:
+    with tempfile.NamedTemporaryFile(delete=False, suffix=extension,
+                                     mode="w") as tfile:
         if path.exists(configuration):
             logger.info("Reading configuration from %s", configuration)
             with open(configuration, "r") as fd:
-                old = vault.decrypt(fd.read())
-                tfile.write(old)
+                buffer = fd.read()
+                if buffer:
+                    old = vault.decrypt(fd.read())
+                    tfile.write(old)
         tfile.close()
         process = Popen([editor, tfile.name])
         process.wait()
@@ -45,9 +51,12 @@ def main(configuration, passkey: str = ""):
         return
     if payload != "":
         payload = vault.encrypt(payload)
-    logger.info("Writing %d bytes", len(payload))
-    with open(configuration, "w+") as fd:
-        fd.write(payload)
+    try:
+        with open(configuration, "w+") as fd:
+            fd.write(payload)
+            logger.info("Writing %d bytes", len(payload))
+    except PermissionError:
+        logger.error("Couldn't write configuration to file: %s", payload)
 
 
 if __name__ == "__main__":
