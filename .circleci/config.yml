@@ -5,9 +5,9 @@ jobs:
       python_version:
         type: string
     docker:
-      - image: cimg/<<parameters.python_version>>
+      - image: cimg/python:<<parameters.python_version>>
     environment:
-      JOB_VERSION: <<parameters.python_version>>
+      JOB_VERSION: python<<parameters.python_version>>
     parallelism: 1
     steps:
       - checkout
@@ -24,6 +24,9 @@ jobs:
           key: deps-{{ checksum "poetry.lock" }}-{{ .Environment.CIRCLE_JOB }}
           paths:
             - /home/circleci/.cache/pypoetry/virtualenvs
+      - run:
+          name: More dependencies
+          command: apt install ${JOB_VERSION}-dev
       - run:
           name: Run tests & coverage
           command: |
@@ -50,8 +53,8 @@ workflows:
           matrix:
             parameters:
               python_version:
-                - "python:3.9"
-                - "python:3.10"
-                - "python:3.11"
-                - "python:3.12"
-                - "python:3.13"
+                - "3.9"
+                - "3.10"
+                - "3.11"
+                - "3.12"
+                - "3.13"
