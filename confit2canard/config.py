@@ -1,7 +1,7 @@
 import json
 import logging
 from os import environ, path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 import yaml
 
@@ -97,11 +97,14 @@ class Config:
         if attr.startswith("_") or attr in methods:
             return super().__getattribute__(attr)
 
-        value = self._configuration
+        value: Union[Dict, Node, None] = self._configuration
         keys = attr.split(".")
         for key in keys:
-            value = value.get(key)
-            if not isinstance(value, dict):
-                return value
-            value = Node(value)
+            if value is not None and key in value:
+                value = value[key]
+                if not isinstance(value, dict):
+                    return value
+                value = Node(value)
+            else:
+                value = None
         return value
