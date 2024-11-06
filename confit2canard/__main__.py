@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import logging
 from argparse import ArgumentParser
-from os import environ, unlink, path
+from os import environ, path
 from subprocess import Popen
 import tempfile
 from sys import stderr
