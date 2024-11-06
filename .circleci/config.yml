@@ -17,11 +17,6 @@ jobs:
           keys:
             - deps-{{ checksum "poetry.lock" }}-{{ .Environment.CIRCLE_JOB }}
       - run:
-          name: More dependencies
-          command: |
-            sudo apt update
-            sudo apt install ${JOB_VERSION}-dev
-      - run:
           name: Poetry installing dependencies
           command: |
             poetry install
