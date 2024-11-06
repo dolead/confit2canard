@@ -19,7 +19,7 @@ def test_load_config():
 
 def test_exception_on_load():
     with pytest.raises(FileNotFoundError) as ex_info:
-        config = Config(["logging.yml"])
+        Config(["logging.yml"])
     assert ex_info.typename == "FileNotFoundError"
 
 

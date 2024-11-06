@@ -15,4 +15,5 @@ class Node:
         return getattr(self, item, None)
 
     def __iter__(self):
-        return self._keys
+        for key in self._keys:
+            yield key
