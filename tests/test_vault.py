@@ -2,7 +2,7 @@ import json
 
 from confit2canard import Vault
 
-SECRET_KEY="ThisIsSupposedToBeAKey0000000000".encode("utf-8")
+SECRET_KEY="ThisIsSupposedToBeAKey0000000000".encode("utf-8")  # noqa
 PAYLOAD={"Water": "wet", "Fire": "burns"}
 ENCRYPTED_PAYLOAD=("$Vault;mp4C9+rlUYCRttbL;7fs4rsL2KrC3MZ1g2a8GFn"
                    "Nvoki35cZyi4HI2ggmnHo1;sPQ2X70aDhHXXWh4xOi3Hw==")

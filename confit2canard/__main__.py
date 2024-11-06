@@ -2,7 +2,7 @@
 import logging
 from argparse import ArgumentParser
 from os import environ, path
-from subprocess import Popen
+from subprocess import Popen  # noqa
 import tempfile
 from sys import stderr
 
@@ -36,7 +36,7 @@ def main(configuration, passkey: str = ""):
                     old = vault.decrypt(fd.read())
                     tfile.write(old)
         tfile.close()
-        process = Popen([editor, tfile.name])
+        process = Popen([editor, tfile.name])  # noqa
         process.wait()
 
         if process.returncode != 0:

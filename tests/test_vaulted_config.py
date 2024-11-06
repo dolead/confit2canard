@@ -3,7 +3,7 @@ import pytest
 
 from confit2canard.config import Config
 
-SECRET_KEY="ThisIsSupposedToBeAKey0000000000"
+SECRET_KEY="ThisIsSupposedToBeAKey0000000000"  # noqa
 
 
 def test_load_vaulted_config():
@@ -12,7 +12,7 @@ def test_load_vaulted_config():
 
     config = Config(["tests/secrets/keys.yml"], passkey=SECRET_KEY)
     assert config._configuration != {}
-    assert config.token == "patriot"
+    assert config.token == "patriot"  # noqa
 
 
 def test_load_envpasskey_vaulted_config():
@@ -23,7 +23,7 @@ def test_load_envpasskey_vaulted_config():
     environ["VAULT_PASSKEY"] = SECRET_KEY
     config = Config(["tests/secrets/keys.yml"], passkey=SECRET_KEY)
     assert config._configuration
-    assert config.token == "patriot"
+    assert config.token == "patriot"  # noqa
 
 
 def test_load_override_vaulted_config():
