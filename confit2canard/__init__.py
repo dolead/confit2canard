@@ -1,2 +1,2 @@
-from .config import Config
-from .vault import Vault
+from .config import Config  # noqa
+from .vault import Vault  # noqa

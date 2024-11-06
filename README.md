@@ -1,3 +1,4 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/dolead/confit2canard/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/dolead/confit2canard/tree/main) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/76833f3568f2479d8470a7320429cbfe)](https://app.codacy.com/gh/dolead/confit2canard/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 # Confit2Canard 🦆
 
 Minimalistic library to load settings from JSON and YAML files that also
