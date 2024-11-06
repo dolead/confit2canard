@@ -31,7 +31,7 @@ jobs:
                 name: More dependencies
                 command: |
                   sudo apt update
-                  sudo apt install -y python<<parameters.mengine_version>>-dev
+                  sudo apt install -y python<<parameters.python_version>>-dev
       - run:
           name: Poetry installing dependencies
           command: |
