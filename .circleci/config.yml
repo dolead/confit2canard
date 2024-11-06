@@ -20,18 +20,18 @@ jobs:
       #     name: More dependencies
       #     command: |
       #       pip install --upgrade pip setuptools wheel
-      - when:
-          condition:
-            or:
-              - equal: [ "3.11", <<parameters.python_version>> ]
-              - equal: [ "3.12", <<parameters.python_version>> ]
-              - equal: [ "3.13", <<parameters.python_version>> ]
-          steps:
-            - run:
-                name: More dependencies
-                command: |
-                  sudo apt update
-                  sudo apt install -y python<<parameters.python_version>>-dev
+      # - when:
+      #     condition:
+      #       or:
+      #         - equal: [ "3.11", <<parameters.python_version>> ]
+      #         - equal: [ "3.12", <<parameters.python_version>> ]
+      #         - equal: [ "3.13", <<parameters.python_version>> ]
+      #     steps:
+      #       - run:
+      #           name: More dependencies
+      #           command: |
+      #             sudo apt update
+      #             sudo apt install -y python<<parameters.python_version>>-dev
       - run:
           name: Poetry installing dependencies
           command: |
