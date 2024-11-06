@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 import logging
+import tempfile
 from argparse import ArgumentParser
 from os import environ, path, unlink
 from subprocess import Popen
-import tempfile
 from sys import stderr
 
 from confit2canard import Vault
