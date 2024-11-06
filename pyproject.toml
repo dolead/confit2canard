@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "confit2canard"
-version = "0.1.0"
+version = "0.1.1"
 description = "Minimalistic configuration library with encryption and a tasty name"
 authors = ["Benjamin Hirschfield <benjamin.hirschfield@dolead.com>"]
 maintainers = [

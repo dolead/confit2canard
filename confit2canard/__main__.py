@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import logging
 from argparse import ArgumentParser
-from os import environ, path
+from os import environ, path, unlink
 from subprocess import Popen
 import tempfile
 from sys import stderr
@@ -33,7 +33,14 @@ def main(configuration, passkey: str = ""):
             with open(configuration, "r") as fd:
                 buffer = fd.read()
                 if buffer:
-                    old = vault.decrypt(fd.read())
+                    try:
+                        old = vault.decrypt(buffer)
+                    except ValueError:
+                        logger.error("Couldn't decrypt, the key might not "
+                                     "be valid.")
+                        tfile.close()
+                        unlink(tfile.name)
+                        return
                     tfile.write(old)
         tfile.close()
         process = Popen([editor, tfile.name])
