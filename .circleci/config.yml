@@ -17,6 +17,9 @@ jobs:
           keys:
             - deps-{{ checksum "poetry.lock" }}-{{ .Environment.CIRCLE_JOB }}
       - run:
+          name: More dependencies
+          command: apt install ${JOB_VERSION}-dev
+      - run:
           name: Poetry installing dependencies
           command: |
             poetry install
@@ -24,9 +27,6 @@ jobs:
           key: deps-{{ checksum "poetry.lock" }}-{{ .Environment.CIRCLE_JOB }}
           paths:
             - /home/circleci/.cache/pypoetry/virtualenvs
-      - run:
-          name: More dependencies
-          command: apt install ${JOB_VERSION}-dev
       - run:
           name: Run tests & coverage
           command: |
