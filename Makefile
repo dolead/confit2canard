@@ -5,13 +5,13 @@ install:
 	poetry update
 
 test:
-	$(RUN) pytest --cov=$(PROJECT)
+	$(RUN) pytest --cov=$(PROJECT) --cov-report term-missing
 
 pep8:
 	$(RUN) pycodestyle --ignore=E126,E127,E128,W503 $(PROJECT)/
 
 mypy:
-	$(RUN) mypy $(PROJECT) --ignore-missing-imports
+	$(RUN) mypy $(PROJECT)
 
 lint: pep8 mypy
 

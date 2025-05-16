@@ -5,7 +5,8 @@
 Minimalistic library to load settings from JSON and YAML files that also
 provides configuration encryption with AES-GCM.
 
-[The history of the confit de canard](https://en.wikipedia.org/wiki/Duck_confit).
+And if talking about crypto is not your thing, how about
+[the history of the confit de canard](https://en.wikipedia.org/wiki/Duck_confit)?
 
 ## How to use
 

@@ -38,3 +38,6 @@ def test_override_config():
     config.load("tests/clear/overrides.yml")
     assert config.logging.maxsize == 2048
     assert config.logging.level == "INFO"
+    config.reload()
+    assert config.logging.maxsize == 2048
+    assert config.logging.level == "INFO"

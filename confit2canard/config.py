@@ -33,7 +33,7 @@ class Config:
     def load(self, config_file: str, silent=False):
         logger.info("Trying to load configuration from: %s", config_file)
         if not path.exists(config_file):
-            (logger.warn if silent else logger.critical)(
+            (logger.warning if silent else logger.critical)(
                 "Missing config file: %s", config_file)
             if not silent:
                 raise FileNotFoundError()
